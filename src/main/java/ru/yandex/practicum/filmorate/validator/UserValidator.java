@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Component
 public class UserValidator {
-    private final static LocalDate NOW = LocalDate.now();
-    private final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final LocalDate NOW = LocalDate.now();
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public void validateAddUser(User user) throws ValidationException {
         if (user.getEmail().isBlank()) {

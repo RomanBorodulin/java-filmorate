@@ -12,9 +12,9 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Component
 public class FilmValidator {
-    private static final  LocalDate MOVIE_BIRTHDAY = LocalDate.of(1895, Month.DECEMBER, 28);
-    private static final  int MAX_LENGTH_DESCRIPTION = 200;
-    private static final  DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final LocalDate MOVIE_BIRTHDAY = LocalDate.of(1895, Month.DECEMBER, 28);
+    private static final int MAX_LENGTH_DESCRIPTION = 200;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public void validateAddFilm(Film film) throws ValidationException {
         if (film.getName().isBlank()) {
