@@ -14,7 +14,7 @@ public class UserValidator {
     private static final LocalDate NOW = LocalDate.now();
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    public void validateAddUser(User user) throws ValidationException {
+    public void validateAddUser(User user) {
         if (user.getEmail().isBlank()) {
             log.warn("Введена пустая электронная почта");
             throw new ValidationException("Электронная почта не может быть пустой");

@@ -36,7 +36,7 @@ public class FilmValidatorTests {
     }
 
     @Test
-    public void shouldAddFilmWhenNameExists() throws ValidationException {
+    public void shouldAddFilmWhenNameExists() {
         film.setName("I exist");
         filmService.add(film);
         assertTrue(filmService.getAll().contains(film));
@@ -50,14 +50,14 @@ public class FilmValidatorTests {
     }
 
     @Test
-    public void shouldAddFilmWhenDescriptionLengthEquals200() throws ValidationException {
+    public void shouldAddFilmWhenDescriptionLengthEquals200() {
         film.setDescription("a".repeat(200));
         filmService.add(film);
         assertTrue(filmService.getAll().contains(film));
     }
 
     @Test
-    public void shouldAddFilmWhenDescriptionLengthLess200() throws ValidationException {
+    public void shouldAddFilmWhenDescriptionLengthLess200() {
         film.setDescription("");
         filmService.add(film);
         assertTrue(filmService.getAll().contains(film));
@@ -72,14 +72,14 @@ public class FilmValidatorTests {
     }
 
     @Test
-    public void shouldAddFilmWhenReleaseDateEquals28December1895() throws ValidationException {
+    public void shouldAddFilmWhenReleaseDateEquals28December1895() {
         film.setReleaseDate(LocalDate.of(1895, Month.DECEMBER, 28));
         filmService.add(film);
         assertTrue(filmService.getAll().contains(film));
     }
 
     @Test
-    public void shouldAddFilmWhenReleaseDateAfter28December1895() throws ValidationException {
+    public void shouldAddFilmWhenReleaseDateAfter28December1895() {
         film.setReleaseDate(LocalDate.of(1895, Month.DECEMBER, 29));
         filmService.add(film);
         assertTrue(filmService.getAll().contains(film));
@@ -100,7 +100,7 @@ public class FilmValidatorTests {
     }
 
     @Test
-    public void shouldAddFilmWhenDurationIsPositive() throws ValidationException {
+    public void shouldAddFilmWhenDurationIsPositive() {
         film.setDuration(1);
         filmService.add(film);
         assertTrue(filmService.getAll().contains(film));

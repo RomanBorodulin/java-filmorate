@@ -16,7 +16,7 @@ public class FilmValidator {
     private static final int MAX_LENGTH_DESCRIPTION = 200;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    public void validateAddFilm(Film film) throws ValidationException {
+    public void validateAddFilm(Film film) {
         if (film.getName().isBlank()) {
             log.warn("Введено пустое название фильма");
             throw new ValidationException("Отсутствует название фильма");

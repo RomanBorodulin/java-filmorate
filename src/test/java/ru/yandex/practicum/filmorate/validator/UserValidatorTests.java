@@ -30,7 +30,7 @@ public class UserValidatorTests {
     }
 
     @Test
-    public void shouldAddUserWhenEmailIsValid() throws ValidationException {
+    public void shouldAddUserWhenEmailIsValid() {
         userService.add(user);
         assertTrue(userService.getAll().contains(user));
 
@@ -51,7 +51,7 @@ public class UserValidatorTests {
     }
 
     @Test
-    public void shouldAddUserWhenLoginIsValid() throws ValidationException {
+    public void shouldAddUserWhenLoginIsValid() {
         user.setLogin("ValidLogin");
         userService.add(user);
         assertTrue(userService.getAll().contains(user));
@@ -72,21 +72,21 @@ public class UserValidatorTests {
     }
 
     @Test
-    public void shouldAddUserWhenNameIsEmptyAndNameWillBeEqualToLogin() throws ValidationException {
+    public void shouldAddUserWhenNameIsEmptyAndNameWillBeEqualToLogin() {
         user.setName(" ");
         userService.add(user);
         assertEquals(user.getLogin(), new ArrayList<>(userService.getAll()).get(0).getName());
     }
 
     @Test
-    public void shouldAddUserWhenNameIsNullAndNameWillBeEqualToLogin() throws ValidationException {
+    public void shouldAddUserWhenNameIsNullAndNameWillBeEqualToLogin() {
         user.setName(null);
         userService.add(user);
         assertEquals(user.getLogin(), new ArrayList<>(userService.getAll()).get(0).getName());
     }
 
     @Test
-    public void shouldAddUserWhenNameIsValid() throws ValidationException {
+    public void shouldAddUserWhenNameIsValid() {
         user.setName("ValidName");
         userService.add(user);
         assertTrue(userService.getAll().contains(user));
@@ -100,14 +100,14 @@ public class UserValidatorTests {
     }
 
     @Test
-    public void shouldAddUserWhenBirthdayNow() throws ValidationException {
+    public void shouldAddUserWhenBirthdayNow() {
         user.setBirthday(LocalDate.now());
         userService.add(user);
         assertTrue(userService.getAll().contains(user));
     }
 
     @Test
-    public void shouldAddUserWhenBirthdayInThePast() throws ValidationException {
+    public void shouldAddUserWhenBirthdayInThePast() {
         user.setBirthday(LocalDate.of(2000, Month.APRIL, 12));
         userService.add(user);
         assertTrue(userService.getAll().contains(user));

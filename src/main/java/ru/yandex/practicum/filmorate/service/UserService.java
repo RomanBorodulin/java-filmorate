@@ -19,7 +19,7 @@ public class UserService {
     private static int id = 0;
     private final UserValidator userValidator;
 
-    public User add(User user) throws ValidationException {
+    public User add(User user) {
         userValidator.validateAddUser(user);
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
@@ -30,7 +30,7 @@ public class UserService {
         return user;
     }
 
-    public User update(User user) throws ValidationException {
+    public User update(User user) {
         if (!idToUsers.containsKey(user.getId())) {
             log.warn("Пользователь с id={} не существует", user.getId());
             throw new ValidationException("Пользователь с указанным id не был добавлен ранее");

@@ -19,7 +19,7 @@ public class FilmService {
     private static int id = 0;
     private final FilmValidator filmValidator;
 
-    public Film add(Film film) throws ValidationException {
+    public Film add(Film film) {
         filmValidator.validateAddFilm(film);
         film.setId(++id);
         idToFilms.put(film.getId(), film);
@@ -27,7 +27,7 @@ public class FilmService {
         return film;
     }
 
-    public Film update(Film film) throws ValidationException {
+    public Film update(Film film) {
         if (!idToFilms.containsKey(film.getId())) {
             log.warn("Фильм с id={} не существует", film.getId());
             throw new ValidationException("Фильм с указанным id не был добавлен ранее");

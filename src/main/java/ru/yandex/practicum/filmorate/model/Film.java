@@ -3,8 +3,8 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -12,12 +12,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Film {
     private int id;
-    @NonNull
+    @NotNull
     private String name;
     private String description;
-    @NonNull
+    @NotNull
     private LocalDate releaseDate;
-    @NonNull
+    @NotNull
     private Integer duration;
 
 }
