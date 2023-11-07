@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -22,7 +24,7 @@ public class UserValidatorTests {
 
     @BeforeEach
     public void beforeEach() {
-        userService = new UserService(new UserValidator());
+        userService = new UserService(new InMemoryUserStorage(), new InMemoryFilmStorage(), new UserValidator());
         user = User.builder().email("email@ya.ru")
                 .login("User12345")
                 .name("User")
@@ -32,7 +34,7 @@ public class UserValidatorTests {
     @Test
     public void shouldAddUserWhenEmailIsValid() {
         userService.add(user);
-        assertTrue(userService.getAll().contains(user));
+        assertTrue(userService.getAllUsers().contains(user));
 
     }
 
@@ -40,76 +42,76 @@ public class UserValidatorTests {
     public void shouldNotAddUserWhenEmailIsEmpty() {
         user.setEmail("");
         assertThrows(ValidationException.class, () -> userService.add(user));
-        assertTrue(userService.getAll().isEmpty());
+        assertTrue(userService.getAllUsers().isEmpty());
     }
 
     @Test
     public void shouldNotAddUserWhenEmailDoesNotContainSymbol() {
         user.setEmail("email.ya.ru");
         assertThrows(ValidationException.class, () -> userService.add(user));
-        assertTrue(userService.getAll().isEmpty());
+        assertTrue(userService.getAllUsers().isEmpty());
     }
 
     @Test
     public void shouldAddUserWhenLoginIsValid() {
         user.setLogin("ValidLogin");
         userService.add(user);
-        assertTrue(userService.getAll().contains(user));
+        assertTrue(userService.getAllUsers().contains(user));
     }
 
     @Test
     public void shouldNotAddUserWhenLoginIsEmpty() {
         user.setLogin(" ");
         assertThrows(ValidationException.class, () -> userService.add(user));
-        assertTrue(userService.getAll().isEmpty());
+        assertTrue(userService.getAllUsers().isEmpty());
     }
 
     @Test
     public void shouldNotAddUserWhenLoginContainsSpaces() {
         user.setLogin("Contains Spaces");
         assertThrows(ValidationException.class, () -> userService.add(user));
-        assertTrue(userService.getAll().isEmpty());
+        assertTrue(userService.getAllUsers().isEmpty());
     }
 
     @Test
     public void shouldAddUserWhenNameIsEmptyAndNameWillBeEqualToLogin() {
         user.setName(" ");
         userService.add(user);
-        assertEquals(user.getLogin(), new ArrayList<>(userService.getAll()).get(0).getName());
+        assertEquals(user.getLogin(), new ArrayList<>(userService.getAllUsers()).get(0).getName());
     }
 
     @Test
     public void shouldAddUserWhenNameIsNullAndNameWillBeEqualToLogin() {
         user.setName(null);
         userService.add(user);
-        assertEquals(user.getLogin(), new ArrayList<>(userService.getAll()).get(0).getName());
+        assertEquals(user.getLogin(), new ArrayList<>(userService.getAllUsers()).get(0).getName());
     }
 
     @Test
     public void shouldAddUserWhenNameIsValid() {
         user.setName("ValidName");
         userService.add(user);
-        assertTrue(userService.getAll().contains(user));
+        assertTrue(userService.getAllUsers().contains(user));
     }
 
     @Test
     public void shouldNotAddUserWhenBirthdayInTheFuture() {
         user.setBirthday(LocalDate.of(2200, Month.APRIL, 12));
         assertThrows(ValidationException.class, () -> userService.add(user));
-        assertTrue(userService.getAll().isEmpty());
+        assertTrue(userService.getAllUsers().isEmpty());
     }
 
     @Test
     public void shouldAddUserWhenBirthdayNow() {
         user.setBirthday(LocalDate.now());
         userService.add(user);
-        assertTrue(userService.getAll().contains(user));
+        assertTrue(userService.getAllUsers().contains(user));
     }
 
     @Test
     public void shouldAddUserWhenBirthdayInThePast() {
         user.setBirthday(LocalDate.of(2000, Month.APRIL, 12));
         userService.add(user);
-        assertTrue(userService.getAll().contains(user));
+        assertTrue(userService.getAllUsers().contains(user));
     }
 }
