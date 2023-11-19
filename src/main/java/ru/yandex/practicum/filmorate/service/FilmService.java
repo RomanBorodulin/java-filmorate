@@ -1,7 +1,8 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -15,7 +16,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class FilmService {
 
     private final FilmStorage filmStorage;
@@ -24,15 +24,23 @@ public class FilmService {
 
     private final FilmValidator filmValidator;
 
-    private static long id = 0;
-
+    @Autowired
+    public FilmService(@Qualifier("filmDbStorage") FilmStorage filmStorage,
+                       @Qualifier("userDbStorage") UserStorage userStorage,
+                       FilmValidator filmValidator) {
+        this.filmStorage = filmStorage;
+        this.userStorage = userStorage;
+        this.filmValidator = filmValidator;
+    }
 
     public Film add(Film film) {
         filmValidator.validateAddFilm(film);
         if (film.getLikes() == null) {
             film.setLikes(new HashSet<>());
         }
-        film.setId(++id);
+        if (film.getGenres() == null) {
+            film.setGenres(new HashSet<>());
+        }
         return filmStorage.add(film);
     }
 
@@ -45,7 +53,6 @@ public class FilmService {
     public Film update(Film film) {
         validateExistFilm(film.getId());
         filmValidator.validateAddFilm(film);
-        film.setLikes(filmStorage.getAllFilms().get(film.getId()).getLikes());
         return filmStorage.update(film);
     }
 
@@ -61,14 +68,14 @@ public class FilmService {
     }
 
     public Film addLike(long filmId, long userId) {
-        validateExistFilm(id);
+        validateExistFilm(filmId);
         validateExistUser(userId);
         return filmStorage.addLike(filmId, userId);
 
     }
 
     public Film deleteLike(long filmId, long userId) {
-        validateExistFilm(id);
+        validateExistFilm(filmId);
         validateExistUser(userId);
         return filmStorage.deleteLike(filmId, userId);
 

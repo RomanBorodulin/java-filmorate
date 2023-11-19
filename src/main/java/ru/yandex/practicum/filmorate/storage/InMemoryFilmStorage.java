@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 public class InMemoryFilmStorage implements FilmStorage {
 
     private final Map<Long, Film> idToFilms = new HashMap<>();
+    private static long id = 0;
 
     @Override
     public Film add(Film film) {
+        film.setId(++id);
         idToFilms.put(film.getId(), film);
         log.debug("Новый фильм с id={} добавлен", film.getId());
         return film;
