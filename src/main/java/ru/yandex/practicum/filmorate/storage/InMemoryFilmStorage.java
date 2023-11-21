@@ -80,4 +80,9 @@ public class InMemoryFilmStorage implements FilmStorage {
                 .sorted((o1, o2) -> o2.getLikes().size() - o1.getLikes().size())
                 .limit(count).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Long> getLikes(long id) {
+        throw new UnsupportedOperationException("Метод не поддерживается");
+    }
 }

@@ -23,4 +23,5 @@ public interface FilmStorage {
     List<Film> getPopularFilms(int count);
 
 
+    List<Long> getLikes(long id);
 }
