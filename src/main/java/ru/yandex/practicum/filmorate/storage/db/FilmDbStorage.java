@@ -89,7 +89,7 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public Film addLike(long filmId, long userId) {
-        String sqlQuery = "insert into likes(film_id, user_id) " +
+        String sqlQuery = "merge into likes(film_id, user_id) " +
                 "values(?, ?)";
         jdbcTemplate.update(sqlQuery, filmId, userId);
         log.debug("Лайк от пользователя с id={} добавлен", userId);

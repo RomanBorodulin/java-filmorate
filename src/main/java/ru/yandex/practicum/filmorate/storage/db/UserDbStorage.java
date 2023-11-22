@@ -75,7 +75,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User addFriend(long id, long friendId) {
-        String sqlQuery = "insert into friends(user_id, friend_id, friendship) " +
+        String sqlQuery = "merge into friends(user_id, friend_id, friendship) " +
                 "values (?, ?, ?)";
         jdbcTemplate.update(sqlQuery, id, friendId, true);
         log.debug("Пользователь c id={} добавлен в друзья", friendId);
