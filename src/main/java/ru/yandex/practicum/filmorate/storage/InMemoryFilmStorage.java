@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 public class InMemoryFilmStorage implements FilmStorage {
 
     private final Map<Long, Film> idToFilms = new HashMap<>();
+    private static long id = 0;
 
     @Override
     public Film add(Film film) {
+        film.setId(++id);
         idToFilms.put(film.getId(), film);
         log.debug("Новый фильм с id={} добавлен", film.getId());
         return film;
@@ -77,5 +79,10 @@ public class InMemoryFilmStorage implements FilmStorage {
         return idToFilms.values().stream()
                 .sorted((o1, o2) -> o2.getLikes().size() - o1.getLikes().size())
                 .limit(count).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> getLikes(long id) {
+        throw new UnsupportedOperationException("Метод не поддерживается");
     }
 }

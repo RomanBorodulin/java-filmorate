@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> idToUsers = new HashMap<>();
+    private static long id = 0;
 
     @Override
     public User add(User user) {
+        user.setId(++id);
         idToUsers.put(user.getId(), user);
         log.debug("Новый пользователь c id={} добавлен", user.getId());
         return user;
